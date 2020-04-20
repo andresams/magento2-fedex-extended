@@ -26,6 +26,10 @@ class FreeShippingOptions implements OptionSourceInterface
     {
         return [
             [
+                'value' => 0,
+                'label' => __('-- Select an option --')
+            ],
+            [
                 'value' => Rule::FREE_SHIPPING_ORDER,
                 'label' => __('Free Shipping for the entire order')
             ]

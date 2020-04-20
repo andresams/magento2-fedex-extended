@@ -20,7 +20,6 @@
                 <select>
                     <settings>
                         <options class="Prestafy\FedexExtended\Model\Source\SalesRule\FreeShippingOptions"/>
-                        <caption translate="true">-- Please Select --</caption>
                     </settings>
                 </select>
             </formElements>
