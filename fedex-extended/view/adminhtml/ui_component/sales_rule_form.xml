@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @category   Prestafy
+ * @package    Prestafy_FedexExtended
+ * @author     Andresa Martins <contact@andresa.dev>
+ * @copyright  Copyright (c) 2020 Prestafy eCommerce Solutions (https://www.prestafy.com.br)
+ * @license    https://prestafy.com.br/licenses/free-for-use PRESTAFY FREE FOR USE
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="actions">
+        <field name="simple_free_shipping" formElement="select">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Fedex</label>
+                <dataScope>fedex_free_shipping</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Prestafy\FedexExtended\Model\Source\SalesRule\FreeShippingOptions"/>
+                        <caption translate="true">-- Please Select --</caption>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+</form>
