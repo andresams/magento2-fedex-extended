@@ -29,9 +29,9 @@ class Carrier extends \Magento\Fedex\Model\Carrier implements \Magento\Shipping\
             return $this->getErrorMessage();
         }
 
-        $this->_updateFreeMethodQuote($request);
         $this->setRequest($request);
         $this->_getQuotes();
+        $this->_updateFreeMethodQuote($request);
 
         return $this->getResult();
     }
@@ -59,87 +59,21 @@ class Carrier extends \Magento\Fedex\Model\Carrier implements \Magento\Shipping\
         }
 
         $request->setFreeShipping($freeShipping);
-    }
 
-    /**
-     * Prepare shipping rate result based on response
-     *
-     * @param mixed $response
-     * @return Result
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     */
-    protected function _prepareRateResponse($response)
-    {
-        $costArr = [];
-        $priceArr = [];
-        $errorTitle = 'For some reason we can\'t retrieve tracking info right now.';
-
-        if (is_object($response)) {
-            if ($response->HighestSeverity == 'FAILURE' || $response->HighestSeverity == 'ERROR') {
-                if (is_array($response->Notifications)) {
-                    $notification = array_pop($response->Notifications);
-                    $errorTitle = (string)$notification->Message;
-                } else {
-                    $errorTitle = (string)$response->Notifications->Message;
-                }
-            } elseif (isset($response->RateReplyDetails)) {
-                $allowedMethods = explode(",", $this->getConfigData('allowed_methods'));
-                $freeMethod = $this->getConfigData('free_method');
-                $isFreeShipping = $this->_request->getFreeShipping();
-
-                if (is_array($response->RateReplyDetails)) {
-                    foreach ($response->RateReplyDetails as $rate) {
-                        $serviceName = (string)$rate->ServiceType;
-                        if (in_array($serviceName, $allowedMethods)) {
-                            if ($isFreeShipping && $freeMethod == $serviceName) {
-                                $amount = 0.00;
-                            } else {
-                                $amount = $this->_getRateAmountOriginBased($rate);
-                            }
-
-                            $costArr[$serviceName] = $amount;
-                            $priceArr[$serviceName] = $this->getMethodPrice($amount, $serviceName);
-                        }
-                    }
-                    asort($priceArr);
-                } else {
-                    $rate = $response->RateReplyDetails;
-                    $serviceName = (string)$rate->ServiceType;
-
-                    if (in_array($serviceName, $allowedMethods)) {
-                        if ($isFreeShipping && $freeMethod == $serviceName) {
-                            $amount = 0.00;
-                        } else {
-                            $amount = $this->_getRateAmountOriginBased($rate);
-                        }
-                        $costArr[$serviceName] = $amount;
-                        $priceArr[$serviceName] = $this->getMethodPrice($amount, $serviceName);
+        if ($freeShipping) {
+            $freeRateId = false;
+            $freeMethod = $this->getConfigData('free_method');
+            if (is_object($this->_result)) {
+                foreach ($this->_result->getAllRates() as $i => $item) {
+                    if ($item->getMethod() == $freeMethod) {
+                        $freeRateId = $i;
+                        break;
                     }
                 }
             }
-        }
-
-        $result = $this->_rateFactory->create();
-        if (empty($priceArr)) {
-            $error = $this->_rateErrorFactory->create();
-            $error->setCarrier($this->_code);
-            $error->setCarrierTitle($this->getConfigData('title'));
-            $error->setErrorMessage($errorTitle);
-            $error->setErrorMessage($this->getConfigData('specificerrmsg'));
-            $result->append($error);
-        } else {
-            foreach ($priceArr as $method => $price) {
-                $rate = $this->_rateMethodFactory->create();
-                $rate->setCarrier($this->_code);
-                $rate->setCarrierTitle($this->getConfigData('title'));
-                $rate->setMethod($method);
-                $rate->setMethodTitle($this->getCode('method', $method));
-                $rate->setCost($costArr[$method]);
-                $rate->setPrice($price);
-                $result->append($rate);
+            if ($freeMethod !== false) {
+                $this->_result->getRateById($freeRateId)->setPrice(0);
             }
         }
-
-        return $result;
     }
 }
