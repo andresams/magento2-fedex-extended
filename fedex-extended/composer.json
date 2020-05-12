@@ -1,7 +1,7 @@
 {
   "name": "prestafy/fedex-extended",
   "description": "Extends the native Fedex module with a bunch of cool features",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "magento2-module",
   "license": "MIT License",
   "authors": [
