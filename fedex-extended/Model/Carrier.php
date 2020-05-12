@@ -180,7 +180,7 @@ class Carrier extends \Magento\Fedex\Model\Carrier implements \Magento\Shipping\
             'Version' => $this->getVersionInfo(),
             'RequestedShipment' => [
                 'DropoffType' => $r->getDropoffType(),
-                'ShipTimestamp' => $this->_timezone->date()->format('c'),
+                'ShipTimestamp' => $this->calculatePickupDate(),
                 'PackagingType' => $r->getPackaging(),
                 'Shipper' => [
                     'Address' => ['PostalCode' => $r->getOrigPostal(), 'CountryCode' => $r->getOrigCountry()],
@@ -317,5 +317,19 @@ class Carrier extends \Magento\Fedex\Model\Carrier implements \Magento\Shipping\
     public function formatEstimatedDeliveryDate($deliveryTimeStamp)
     {
         return __('Get it %1', date('l, F d', strtotime($deliveryTimeStamp)));
+    }
+
+    /**
+     * Calculate and return Shipment Pickup Date
+     * Pickup date will always be set to the next business day
+     *
+     * @return string
+     */
+    private function calculatePickupDate()
+    {
+        $currentTimeStamp = $this->_timezone->date()->format('c');
+        $currentTimeStamp = date('c', strtotime($currentTimeStamp . ' +1 Weekday'));
+
+        return $currentTimeStamp;
     }
 }
