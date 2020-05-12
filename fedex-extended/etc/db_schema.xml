@@ -12,7 +12,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
 
     <table name="salesrule" resource="default" comment="Salesrule">
-        <column xsi:type="smallint" name="fedex_free_shipping" padding="5" unsigned="true" nullable="true"
+        <column xsi:type="smallint" name="free_shipping" padding="5" unsigned="true" nullable="true"
                 identity="false" default="0" comment="Simple Free Shipping"/>
     </table>
     <table name="sales_order_item" resource="sales" comment="Sales Flat Order Item">
