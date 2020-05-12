@@ -1,0 +1,97 @@
+<!--
+/**
+ * @category   Prestafy
+ * @package    Prestafy_FedexExtended
+ * @author     Andresa Martins <contact@andresa.dev>
+ * @copyright  Copyright (c) 2020 Prestafy eCommerce Solutions (https://www.prestafy.com.br)
+ * @license    https://prestafy.com.br/licenses/free-for-use PRESTAFY FREE FOR USE
+ */
+-->
+<!-- ko if: quoteIsVirtual == 0 -->
+<!-- ko if: isBothPricesDisplayed() -->
+<tr class="totals shipping excl">
+    <th class="mark" scope="row">
+        <span class="label" data-bind="text: title+ ' ' + excludingTaxMessage"></span>
+        <!-- ko if: haveToShowCoupon() -->
+        <span class="label description" data-bind="text: getCouponDescription()"></span>
+        <!-- /ko -->
+        <span class="value" data-bind="text: getShippingMethodTitle()"></span>
+        <span class="value fedex-delivery-date" data-bind="text: getShippingMethodDeliveryDate()"></span>
+    </th>
+    <td class="amount">
+        <!-- ko if: isCalculated() -->
+        <span class="price"
+              data-bind="text: getExcludingValue(), attr: {'data-th': excludingTaxMessage}"></span>
+        <!-- /ko -->
+        <!-- ko ifnot: isCalculated() -->
+        <span class="not-calculated"
+              data-bind="text: getExcludingValue(), attr: {'data-th': excludingTaxMessage}"></span>
+        <!-- /ko -->
+    </td>
+</tr>
+<tr class="totals shipping incl">
+    <th class="mark" scope="row">
+        <span class="label" data-bind="text: title + ' ' + includingTaxMessage"></span>
+        <!-- ko if: haveToShowCoupon() -->
+        <span class="label description" data-bind="text: getCouponDescription()"></span>
+        <!-- /ko -->
+        <span class="value" data-bind="text: getShippingMethodTitle()"></span>
+        <span class="value fedex-delivery-date" data-bind="text: getShippingMethodDeliveryDate()"></span>
+    </th>
+    <td class="amount">
+        <!-- ko if: isCalculated() -->
+        <span class="price"
+              data-bind="text: getIncludingValue(), attr: {'data-th': title + ' ' + excludingTaxMessage}"></span>
+        <!-- /ko -->
+        <!-- ko ifnot: isCalculated() -->
+        <span class="not-calculated"
+              data-bind="text: getIncludingValue(), attr: {'data-th': title + ' ' + excludingTaxMessage}"></span>
+        <!-- /ko -->
+    </td>
+</tr>
+<!-- /ko -->
+<!-- ko if: isIncludingDisplayed() -->
+<tr class="totals shipping incl">
+    <th class="mark" scope="row">
+        <span class="label" data-bind="i18n: title"></span>
+        <!-- ko if: haveToShowCoupon() -->
+        <span class="label description" data-bind="text: getCouponDescription()"></span>
+        <!-- /ko -->
+        <span class="value" data-bind="text: getShippingMethodTitle()"></span>
+        <span class="value fedex-delivery-date" data-bind="text: getShippingMethodDeliveryDate()"></span>
+    </th>
+    <td class="amount">
+        <!-- ko if: isCalculated() -->
+        <span class="price"
+              data-bind="text: getIncludingValue(), attr: {'data-th': title}"></span>
+        <!-- /ko -->
+        <!-- ko ifnot: isCalculated() -->
+        <span class="not-calculated"
+              data-bind="text: getIncludingValue(), attr: {'data-th': title}"></span>
+        <!-- /ko -->
+    </td>
+</tr>
+<!-- /ko -->
+<!-- ko if: isExcludingDisplayed() -->
+<tr class="totals shipping excl">
+    <th class="mark" scope="row">
+        <span class="label" data-bind="i18n: title"></span>
+        <!-- ko if: haveToShowCoupon() -->
+        <span class="label description" data-bind="text: getCouponDescription()"></span>
+        <!-- /ko -->
+        <span class="value" data-bind="text: getShippingMethodTitle()"></span>
+        <span class="value fedex-delivery-date" data-bind="text: getShippingMethodDeliveryDate()"></span>
+    </th>
+    <td class="amount">
+        <!-- ko if: isCalculated() -->
+        <span class="price"
+              data-bind="text: getValue(), attr: {'data-th': title}"></span>
+        <!-- /ko -->
+        <!-- ko ifnot: isCalculated() -->
+        <span class="not-calculated"
+              data-bind="text: getValue(), attr: {'data-th': title}"></span>
+        <!-- /ko -->
+    </td>
+</tr>
+<!-- /ko -->
+<!-- /ko -->
