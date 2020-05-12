@@ -12,4 +12,10 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Magento\Fedex\Model\Carrier" type="Prestafy\FedexExtended\Model\Carrier"/>
     <preference for="Magento\Quote\Model\Quote\Address\FreeShippingInterface" type="Prestafy\FedexExtended\Model\Quote\Address\FreeShipping" />
+    <type name="Magento\Quote\Model\Cart\ShippingMethodConverter">
+        <plugin name="add_shipping_rate_delivery_date" type="Prestafy\FedexExtended\Plugin\Carrier\DeliveryDate" disabled="false" sortOrder="1"/>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Address\Rate">
+        <plugin name="add_shipping_method_delivery_date" type="Prestafy\FedexExtended\Plugin\Quote\Address\Rate" disabled="false" sortOrder="2"/>
+    </type>
 </config>

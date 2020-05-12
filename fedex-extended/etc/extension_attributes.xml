@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category   Prestafy
+ * @package    Prestafy_FedexExtended
+ * @author     Andresa Martins <contact@andresa.dev>
+ * @copyright  Copyright (c) 2020 Prestafy eCommerce Solutions (https://www.prestafy.com.br)
+ * @license    https://prestafy.com.br/licenses/free-for-use PRESTAFY FREE FOR USE
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+    <extension_attributes for="Magento\Quote\Api\Data\ShippingMethodInterface">
+        <attribute code="delivery_date" type="string"/>
+    </extension_attributes>
+    <extension_attributes for="Magento\Checkout\Api\Data\ShippingInformationInterface">
+        <attribute code="delivery_date" type="string"/>
+    </extension_attributes>
+</config>
