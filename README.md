@@ -3,7 +3,7 @@ This module extends Magento's native Fedex module with a lot of cool features, s
 
  - Free Shipping using Promotions (Cart Rules)
  - Display estimated delivery date
- - ~~Use only weekdays as possible pickup dates (pickup date is moved to the next weekday when shipping rates are requested during an weekend)~~
+ - Use only weekdays as possible pickup dates (pickup date is moved to the next weekday when shipping rates are requested during an weekend)
  - ~~Add extra days to the pickup date~~
 
 ## Usage
